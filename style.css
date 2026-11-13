@@ -480,4 +480,11 @@ body {
     touch-action: none;
     object-fit: contain;
 }
+
+.canvas-holder {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex;
+    justify-content: center;
+}
 }
