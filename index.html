@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AEROSTRIKE // Tactical Apex v45.0</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="site-wrapper">
+        <!-- Верхняя панель -->
+        <header class="site-header">
+            <div class="logo-area">
+                <i class="fa-solid fa-jet-fighter-up neon-icon"></i>
+                <span class="logo-text">AERO<span class="highlight">STRIKE</span></span>
+            </div>
+            <div class="site-badge">
+                <span class="status-dot"></span> TACTICAL COMBAT OS v45.0 // ЭЛИТНАЯ ВЕРСИЯ
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="game-card-wrapper">
+                
+                <!-- Экран ангара / меню -->
+                <div id="menuScreen" class="screen">
+                    <div class="hero-titles">
+                        <h2>ТАКТИЧЕСКИЙ АНГАР ИСТРЕБИТЕЛЕЙ</h2>
+                        <p>Усиленные маневрирующие мобы, продвинутая броня противников, арсенал из 10 уникальных бафов и бесконечные сектора.</p>
+                    </div>
+
+                    <!-- Выбор корпуса -->
+                    <div class="section-subtitle">01 // Модификация боевого шасси:</div>
+                    <div class="skins-grid">
+                        <div class="skin-card active" data-skin="cyan" onclick="selectSkin('cyan', this)">
+                            <div class="skin-preview cyan"></div>
+                            <div class="skin-desc">
+                                <strong>Кибер Циан</strong>
+                                <span>Стандартный тактический неон</span>
+                            </div>
+                        </div>
+                        <div class="skin-card" data-skin="red" onclick="selectSkin('red', this)">
+                            <div class="skin-preview red"></div>
+                            <div class="skin-desc">
+                                <strong>Рубиновая Плазма</strong>
+                                <span>Агрессивный плазменный сплав</span>
+                            </div>
+                        </div>
+                        <div class="skin-card" data-skin="gold" onclick="selectSkin('gold', this)">
+                            <div class="skin-preview gold"></div>
+                            <div class="skin-desc">
+                                <strong>Солнечное Золото</strong>
+                                <span>Элитное квантовое покрытие</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Выбор сложности -->
+                    <div class="section-subtitle">02 // Уровень угрозы сектора:</div>
+                    <div class="difficulty-grid">
+                        <button class="diff-card easy" onclick="startGame('easy')">
+                            <div class="diff-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                            <div class="diff-info">
+                                <h3>КОМФОРТНЫЙ (Легкий)</h3>
+                                <p>Увеличенная прочность и частые бафы для комфортного прохождения.</p>
+                            </div>
+                        </button>
+                        <button class="diff-card medium" onclick="startGame('medium')">
+                            <div class="diff-icon"><i class="fa-solid fa-crosshairs"></i></div>
+                            <div class="diff-info">
+                                <h3>ТАКТИЧЕСКИЙ (Средний)</h3>
+                                <p>Сбалансированные маневры врагов и классический аркадный темп.</p>
+                            </div>
+                        </button>
+                        <button class="diff-card hard" onclick="startGame('hard')">
+                            <div class="diff-icon"><i class="fa-solid fa-bolt"></i></div>
+                            <div class="diff-info">
+                                <h3>ДИНАМИЧНЫЙ (Сложный)</h3>
+                                <p>Для элитных пилотов: живучие мобы, агрессивный уворот и плотный огонь.</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Игровой экран -->
+                <div id="playScreen" class="screen" style="display: none;">
+                    <div class="game-hud">
+                        <div class="hud-item">
+                            <span>ПРОЧНОСТЬ БРОНИ</span>
+                            <div class="health-bar-container">
+                                <div id="healthBarFill" class="health-bar-fill"></div>
+                            </div>
+                        </div>
+                        <div class="hud-item">
+                            <span>ЭВОЛЮЦИЯ (<span id="tierLabel">ФАЗА I</span>)</span>
+                            <div class="evolution-bar-container">
+                                <div id="evolutionBarFill" class="evolution-bar-fill"></div>
+                            </div>
+                        </div>
+                        <div class="hud-item center-hud">
+                            <small>СЧЕТ / ТИП ОРУЖИЯ</small>
+                            <strong id="gameScore">0 <span id="ammoLabel" style="color:var(--accent-gold); font-size:11px; display:block;">СТАНДАРТ</span></strong>
+                        </div>
+                        <div class="hud-item right-hud">
+                            <small>СЕКТОР</small>
+                            <strong id="gameWave">1</strong>
+                        </div>
+                    </div>
+
+                    <!-- Панель здоровья босса -->
+                    <div id="bossHudContainer" style="display: none; width: 100%; max-width: 960px; margin-bottom: 8px;">
+                        <div style="display: flex; justify-content: space-between; font-family: 'Orbitron', sans-serif; font-size: 11px; color: #ef4444; margin-bottom: 4px;">
+                            <span id="bossName">⚠️ БОСС СЕКТОРА</span>
+                            <span id="bossHpText">100%</span>
+                        </div>
+                        <div style="width: 100%; height: 10px; background: rgba(255,255,255,0.05); border-radius: 5px; border: 1px solid rgba(239, 68, 68, 0.5); overflow: hidden;">
+                            <div id="bossBarFill" style="width: 100%; height: 100%; background: linear-gradient(90deg, #dc2626, #ef4444); box-shadow: 0 0 15px #ef4444; transition: width 0.15s ease;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Статус бафов -->
+                    <div id="powerupStatus" style="font-family: 'Orbitron', sans-serif; font-size: 12px; color: #f59e0b; margin-bottom: 4px; min-height: 18px; text-align: center; text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);"></div>
+                    
+                    <div class="canvas-holder">
+                        <canvas id="gameCanvas" width="960" height="520"></canvas>
+                    </div>
+
+                    <div class="game-footer-hint">
+                        <span><i class="fa-solid fa-keyboard"></i> Управление: <b>WASD / Стрелки</b> | Тач: <b>Удержание пальца</b></span>
+                        <span><i class="fa-solid fa-bolt"></i> Собирайте 10 видов бафов и уничтожайте маневрирующих врагов!</span>
+                    </div>
+                </div>
+
+                <!-- Экран поражения -->
+                <div id="gameOverScreen" class="screen" style="display: none;">
+                    <div class="game-over-box">
+                        <i class="fa-solid fa-triangle-exclamation alert-icon"></i>
+                        <h2>КОРАБЛЬ УНИЧТОЖЕН</h2>
+                        <p>Ваш боевой истребитель пал под натиском усиленной флотилии.</p>
+                        <div class="final-stats">
+                            <div>Итоговый счет: <span id="finalScore">0</span></div>
+                            <div>Достигнутый сектор: <span id="finalWave">1</span></div>
+                        </div>
+                        <button class="primary-btn" onclick="returnToMenu()">
+                            <i class="fa-solid fa-rotate-left"></i> Вернуться в ангар
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Подвал -->
+        <footer class="site-footer">
+            <p>&copy; 2026 AEROSTRIKE COMBAT SYSTEMS. Все права защищены.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
