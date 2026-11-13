@@ -471,4 +471,13 @@ body {
     .skins-grid {
         flex-direction: column;
     }
+#gameCanvas {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 100vh;
+    display: block;
+    margin: 0 auto;
+    touch-action: none;
+    object-fit: contain;
+}
 }
