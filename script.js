@@ -152,7 +152,7 @@ function playSound(type) {
 }
 
 /* --- ЗВЕЗДНЫЙ ФОН --- */
-for (let i = 0; i < 110; i++) {
+for (let i = 0; i < 70; i++) {
     stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
